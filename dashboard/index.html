@@ -1,15 +1,95 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Token Radar: pre-token protocols ranked by implied value</title>
-<link rel="stylesheet" href="app.css">
-</head>
-<body>
-<a class="skip" href="#board">Skip to the board</a>
-<main id="board" tabindex="-1" aria-busy="true"></main>
-<script src="../data.js"></script>
-<script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Token Radar — pre-token DeFi, scored</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="masthead-id">
+        <h1>Token Radar</h1>
+        <p class="tagline">DeFi protocols that have not launched a token, ranked by what the position in front of them is worth.</p>
+      </div>
+      <dl class="masthead-meta">
+        <div><dt>Snapshot</dt><dd id="meta-asof">—</dd></div>
+        <div><dt>Model</dt><dd id="meta-model">—</dd></div>
+        <div><dt>Board</dt><dd id="meta-board">—</dd></div>
+        <div><dt>Trading</dt><dd id="meta-live">—</dd></div>
+      </dl>
+    </header>
+
+    <div class="shell">
+      <main class="work">
+        <div class="toolbar" role="search">
+          <label class="field">
+            <span class="field-label">Search</span>
+            <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="name, symbol, chain…" />
+          </label>
+          <label class="field">
+            <span class="field-label">Category</span>
+            <select id="category"><option value="">All categories</option></select>
+          </label>
+          <label class="field">
+            <span class="field-label">Sort</span>
+            <select id="sort">
+              <option value="implied">Implied value, high to low</option>
+              <option value="tvl">TVL, high to low</option>
+              <option value="growth">7-day change, high to low</option>
+              <option value="young">Newest listing</option>
+              <option value="name">Name, A to Z</option>
+            </select>
+          </label>
+          <div class="views" role="tablist" aria-label="Views">
+            <button id="tab-board" class="tab is-on" role="tab" aria-selected="true">Ranked board</button>
+            <button id="tab-live" class="tab" role="tab" aria-selected="false">Already trading</button>
+          </div>
+        </div>
+
+        <section id="view-board" class="view">
+          <div class="table-head board-cols" aria-hidden="true">
+            <span class="c-rank">#</span>
+            <span class="c-name">Protocol</span>
+            <span class="c-cat">Category</span>
+            <span class="c-chains">Chains</span>
+            <span class="c-num">TVL</span>
+            <span class="c-num">7d</span>
+            <span class="c-num">Implied value</span>
+          </div>
+          <ol id="board" class="board"></ol>
+          <p id="board-empty" class="empty" hidden>No protocol matches that search.</p>
+        </section>
+
+        <section id="view-live" class="view" hidden>
+          <p class="view-note">These protocols already have a token in the market, so they are not ranked: there is no pre-token position to take. Their market cap is shown for scale.</p>
+          <div class="table-head live-cols" aria-hidden="true">
+            <span class="c-name">Protocol</span>
+            <span class="c-cat">Category</span>
+            <span class="c-chains">Chains</span>
+            <span class="c-num">TVL</span>
+            <span class="c-num">Market cap</span>
+            <span class="c-num">7d</span>
+          </div>
+          <ol id="live" class="board live"></ol>
+          <p id="live-empty" class="empty" hidden>No listed protocol matches that search.</p>
+        </section>
+      </main>
+
+      <aside id="detail" class="detail" aria-live="polite">
+        <div class="detail-idle">
+          <h2>Pick a row</h2>
+          <p>Choose a protocol to see its numbers, how the model reached its implied value, and the steps to take a position.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="foot">
+      <p id="foot-source">Source: —</p>
+      <p>Implied value is a model estimate, not a price, an offer, or a promise. Every figure is reproducible from the snapshot and the constants shown in each row.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
